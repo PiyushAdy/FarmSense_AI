@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmSense AI | Register</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --secondary: #81c784;
+            --text: #212121;
+            --text-light: #757575;
+            --background: #f5f7f1;
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --header-gradient: linear-gradient(135deg, #2e7d32, #66bb6a);
+            --error: #f44336;
+        }
+
+        [data-theme="dark"] {
+            --primary: #4caf50;
+            --primary-light: #81c784;
+            --primary-dark: #2e7d32;
+            --secondary: #388e3c;
+            --text: #e0e0e0;
+            --text-light: #b0b0b0;
+            --background: #1a1e1b;
+            --card-bg: #2d332e;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --header-gradient: linear-gradient(135deg, #1b5e20, #2e7d32);
+            --error: #e57373;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 1rem 0;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            margin-right: 10px;
+        }
+
+        .theme-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #1a1e1b;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .theme-icon {
+            position: absolute;
+            top: 5px;
+            font-size: 14px;
+            transition: .4s;
+        }
+
+        .sun-icon {
+            left: 8px;
+            color: #ffeb3b;
+        }
+
+        .moon-icon {
+            right: 8px;
+            color: #1a1e1b;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .register-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+
+        .register-header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .register-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .register-header p {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .register-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text);
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+        }
+
+        .password-requirements {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 8px;
+            padding-left: 15px;
+        }
+
+        .password-requirements ul {
+            list-style-type: none;
+        }
+
+        .password-requirements li {
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-requirements li::before {
+            content: "•";
+            color: var(--text-light);
+            margin-right: 8px;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .form-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .form-button svg {
+            transition: transform 0.2s;
+        }
+
+        .form-button:hover svg {
+            transform: translateX(3px);
+        }
+
+        .terms {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .terms a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+        }
+
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .login-link a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .register-container {
+                border-radius: 0;
+                box-shadow: none;
+                max-width: 100%;
+                height: 100%;
+            }
+            
+            main {
+                padding: 0;
+            }
+            
+            .register-form {
+                padding: 20px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a9 9 0 0 0-9 9c0 4.17 2.84 7.67 6.69 8.69a.5.5 0 0 0 .62-.45V18.5c0-.28-.22-.5-.5-.5h-1.7A2.3 2.3 0 0 1 5.8 16c0-.66.34-1.5.8-2"></path>
+                    <path d="M12 2a9 9 0 0 1 9 9 9 9 0 0 1-9 9"></path>
+                    <path d="M14.5 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 1 0 0-5z"></path>
+                    <path d="M12 16c0-3 2.5-3 2.5-5 0 0 0 1 -.5 1"></path>
+                </svg>
+                FarmSense AI
+            </div>
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider">
+                    <span class="theme-icon sun-icon">☀️</span>
+                    <span class="theme-icon moon-icon">🌙</span>
+                </span>
+            </label>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="register-container">
+                <div class="register-header">
+                    <h1>Create Account</h1>
+                    <p>Join FarmSense AI to monitor and optimize your farm</p>
+                </div>
+                <div class="register-form">
+                    <form id="registerForm" action="/register" method="post">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" id="username" name="username" class="form-input" placeholder="Choose a username" required>
+                            <div id="usernameError" class="error-message">Username must be at least 4 characters long</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                            <div id="emailError" class="error-message">Please enter a valid email address</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" name="password" class="form-input" placeholder="Create a password" required>
+                            <div id="passwordError" class="error-message">Password doesn't meet requirements</div>
+                            <div class="password-requirements">
+                                <ul>
+                                    <li>At least 8 characters long</li>
+                                    <li>Contains uppercase and lowercase letters</li>
+                                    <li>Contains at least one number</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                            <div id="confirmPasswordError" class="error-message">Passwords do not match</div>
+                        </div>
+                        <button type="submit" class="form-button">
+                            Create Account
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    
+                        <div class="login-link">
+                            Already have an account? <a href="/login">Login now</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+
+    <!-- JavaScript -->
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Set initial theme based on user preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+        
+        // Toggle theme on click
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Form validation
+        const registerForm = document.getElementById('registerForm');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        
+        const usernameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        
+        registerForm.addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Username validation
+            if (username.value.length < 4) {
+                username.classList.add('error');
+                usernameError.style.display = 'block';
+                isValid = false;
+            } else {
+                username.classList.remove('error');
+                usernameError.style.display = 'none';
+            }
+            
+            // Email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value)) {
+                email.classList.add('error');
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                email.classList.remove('error');
+                emailError.style.display = 'none';
+            }
+            
+            // Password validation
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+            if (!passwordPattern.test(password.value)) {
+                password.classList.add('error');
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                password.classList.remove('error');
+                passwordError.style.display = 'none';
+            }
+            
+            // Confirm password validation
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.classList.add('error');
+                confirmPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                confirmPassword.classList.remove('error');
+                confirmPasswordError.style.display = 'none';
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

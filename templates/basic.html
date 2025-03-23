@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmSense AI | Data Insights</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --secondary: #81c784;
+            --text: #212121;
+            --text-light: #757575;
+            --background: #f5f7f1;
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --header-gradient: linear-gradient(135deg, #2e7d32, #66bb6a);
+            --error: #f44336;
+        }
+
+        [data-theme="dark"] {
+            --primary: #4caf50;
+            --primary-light: #81c784;
+            --primary-dark: #2e7d32;
+            --secondary: #388e3c;
+            --text: #e0e0e0;
+            --text-light: #b0b0b0;
+            --background: #1a1e1b;
+            --card-bg: #2d332e;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --header-gradient: linear-gradient(135deg, #1b5e20, #2e7d32);
+            --error: #e57373;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 1rem 0;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            margin-right: 10px;
+        }
+
+        .theme-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #1a1e1b;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .theme-icon {
+            position: absolute;
+            top: 5px;
+            font-size: 14px;
+            transition: .4s;
+        }
+
+        .sun-icon {
+            left: 8px;
+            color: #ffeb3b;
+        }
+
+        .moon-icon {
+            right: 8px;
+            color: #1a1e1b;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 40px 0;
+        }
+
+        .data-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .data-header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .data-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .data-header p {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .data-content {
+            padding: 30px;
+        }
+
+        /* AI Data Styling */
+        .ai-data-section {
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .ai-data-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .ai-data-section h5 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .ai-data-section h6 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin: 15px 0 10px;
+        }
+
+        .ai-data-section p {
+            margin-bottom: 15px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .ai-data-section b {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .ai-data-section u {
+            text-decoration-color: var(--secondary);
+            text-underline-offset: 3px;
+        }
+
+        .ai-data-section ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        .ai-data-section li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .ai-data-section li::marker {
+            color: var(--primary);
+        }
+
+        .data-timestamp {
+            display: block;
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .data-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .action-button {
+            padding: 10px 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .action-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .action-button.secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .action-button.secondary:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        /* Data Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .metric-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .trend-up {
+            color: #4caf50;
+        }
+
+        .trend-down {
+            color: #f44336;
+        }
+
+        .trend-neutral {
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .data-container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            main {
+                padding: 0;
+            }
+            
+            .data-content {
+                padding: 20px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a9 9 0 0 0-9 9c0 4.17 2.84 7.67 6.69 8.69a.5.5 0 0 0 .62-.45V18.5c0-.28-.22-.5-.5-.5h-1.7A2.3 2.3 0 0 1 5.8 16c0-.66.34-1.5.8-2"></path>
+                    <path d="M12 2a9 9 0 0 1 9 9 9 9 0 0 1-9 9"></path>
+                    <path d="M14.5 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 1 0 0-5z"></path>
+                    <path d="M12 16c0-3 2.5-3 2.5-5 0 0 0 1 -.5 1"></path>
+                </svg>
+                FarmSense AI
+            </div>
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider">
+                    <span class="theme-icon sun-icon">☀️</span>
+                    <span class="theme-icon moon-icon">🌙</span>
+                </span>
+            </label>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="data-container">
+                <div class="data-header">
+                    <h1>AI-Generated Insights</h1>
+                    <p>Smart analysis of your farm's {{ type }}</p>
+                </div>
+
+                <div class="data-content">
+                    <!-- Metrics Overview -->
+                    <div class="metrics-grid">
+                        {% for key,value in data.items() %}
+                        <div class="metric-card">
+                            <div class="metric-title">{{key}}</div>
+                            <div class="metric-value">{{ value }}</div>
+                            <div class="metric-trend">
+                                {{ units[key] }}
+                            </div> 
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- AI Generated Content - This is where the Jinja template data will be inserted -->
+                    <div class="ai-data-section" id="ai-content">
+                        {{ html_data|safe }}
+                    </div>
+
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+
+    <!-- JavaScript -->
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Set initial theme based on user preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+        
+        // Toggle theme on click
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>
