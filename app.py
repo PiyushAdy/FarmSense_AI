@@ -241,3 +241,6 @@ if __name__ == '__main__':
         db.create_all() # Create the database tables if they don't exist
     # app.run(host="0.0.0.0",port="8080",debug=True)  # Run the app
     app.run()
+else:
+    with app.app_context():
+        db.create_all() 
