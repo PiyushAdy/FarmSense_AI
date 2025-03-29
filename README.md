@@ -38,15 +38,12 @@ Access the hosted application at: [FarmSense AI](https://farmsenseai.ddns.net/)
    ```sh
    pip install -r requirements.txt
    ```
-3. Set up the database:
-   ```sh
-   python setup_db.py
-   ```
-4. Run the Flask application:
+
+3. Run the Flask application:
    ```sh
    flask run
    ```
-5. Access the app in your browser at `http://127.0.0.1:5000/`
+4. Access the app in your browser at `http://127.0.0.1:5000/`
 
 ## 📊 Data Flow
 1. Sensors collect environmental data.
