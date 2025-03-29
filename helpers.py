@@ -1,6 +1,6 @@
 import requests 
 import os
-from soilgrids import SoilGrids
+# from soilgrids import SoilGrids
 import json
 
 def GetWeather(lat,lon):
