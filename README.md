@@ -21,6 +21,7 @@ Access the hosted application at: [FarmSense AI](https://farmsenseai.ddns.net/)
 - **Hardware**: Arduino with Sensors for humidity, temperature, light, and soil moisture
 - **AI Model**: Gemini
 - **Linux Bluetooth Client**:PyQT5
+- **Arduino**:C/C++
 
 ## 🛠️ Setup Instructions
 ### Prerequisites
@@ -46,11 +47,11 @@ Access the hosted application at: [FarmSense AI](https://farmsenseai.ddns.net/)
 4. Access the app in your browser at `http://127.0.0.1:5000/`
 
 ## 📊 Data Flow
-1. Sensors collect environmental data.
-2. Data is transmitted to the Flask backend via Linux Client .
-3. The AI model processes data and generates insights.
-4. Insights are displayed on the web dashboard.
-5. Users receive recommendations.
+1. Sensors and APIs collect environmental data.
+3. Data is transmitted to the Flask backend via Linux Client .
+4. The AI model processes data and generates insights.
+5. Insights are displayed on the web dashboard.
+6. Users receive recommendations.
 
 
 ## 📧 Contact
