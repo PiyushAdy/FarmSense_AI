@@ -45,7 +45,16 @@ Access the hosted application at: [FarmSense AI](https://farmsenseai.ddns.net/)
    flask run
    ```
 4. Access the app in your browser at `http://127.0.0.1:5000/`
-
+## Arduino Setup
+#Things Required
+1. Arduino UNO R3
+2. Soil Moisture Sensor
+3. DHT11
+4. HC05 Bluetooth Module
+5. LDR Sensor
+#Connections
+1 .Connect Moisture Sensor at pin A0
+2.
 ## 📊 Data Flow
 1. Sensors and APIs collect environmental data.
 3. Data is transmitted to the Flask backend via Linux Client .
