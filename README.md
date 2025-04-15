@@ -45,15 +45,15 @@ Access the hosted application at: [FarmSense AI](https://farmsenseai.ddns.net/)
    flask run
    ```
 4. Access the app in your browser at `http://127.0.0.1:5000/`
-### Arduino Setup
-##Things Required
+   ## Arduino Setup
+# Things Required
 1. Arduino UNO R3
 2. Soil Moisture Sensor
 3. DHT11
 4. HC05 Bluetooth Module
 5. LDR Sensor
    
-##Connections
+# Connections
 1. Connect Moisture Sensor at pin A0
 2. Comnect HC05 module at pin
 3. Connect DHT-11 sensor at pin
