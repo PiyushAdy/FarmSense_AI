@@ -55,9 +55,9 @@ Access the hosted application at: [FarmSense AI](https://farmsenseai.ddns.net/)
    
 # Connections
 1. Connect Moisture Sensor at pin A0
-2. Comnect HC05 module at pin
-3. Connect DHT-11 sensor at pin
-4. Connect LDR sensor at pin
+2. Comnect HC05 module at pin 10 & 11
+3. Connect DHT-11 sensor at pin 8
+4. Connect LDR sensor at pin A1
 
 ## 📊 Data Flow
 1. Sensors and APIs collect environmental data.
